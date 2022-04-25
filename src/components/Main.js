@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import api from "../utils/Api.js";
 import Card from "./Card.js";
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar}) {
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
 
 	const [userName, setUserName] = useState();
 	const [userDescription, setUserDescription] = useState();
@@ -37,12 +37,12 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar}) {
 					<div className="profile__heading">
 						<div className="profile__title">
 							<h1 className="profile__name">{userName}</h1>
-							<button className="profile__btn-edit" type="button" ariaLabel="Редактировать" onClick={onEditProfile}></button>
+							<button className="profile__btn-edit" type="button" aria-label="Редактировать" onClick={onEditProfile}></button>
 						</div>
 						<p className="profile__text">{userDescription}</p>
 					</div>
 				</div>
-				<button className="profile__btn-add" type="button" ariaLabel="Добавить" onClick={onAddPlace}></button>
+				<button className="profile__btn-add" type="button" aria-label="Добавить" onClick={onAddPlace}></button>
 			</section>
 
 			<section className="elements">
@@ -51,6 +51,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar}) {
 						<li className="elements__list-item" key={card._id}>
 							<Card 
 								card={card}
+								onCardClick={onCardClick}
 							/>
 						</li>
 					))}

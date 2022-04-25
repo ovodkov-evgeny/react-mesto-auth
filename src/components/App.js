@@ -3,11 +3,13 @@ import Footer from './Footer.js';
 import Header from './Header.js';
 import Main from './Main.js';
 import PopupWithForm from './PopupWithForm.js';
+import ImagePopup from './ImagePopup.js';
 
 function App() {
 	const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
 	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
 	const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+	const [selectedCard, setSelectedCard] = useState(null);
 	
 	function handleEditAvatarClick() {
 		setIsEditAvatarPopupOpen(true);
@@ -21,10 +23,15 @@ function App() {
 		setIsAddPlacePopupOpen(true);
 	}
 
+	function handleCardClick(card) {
+		setSelectedCard(card);
+	}
+
 	function closeAllPopups() {
 		setIsEditProfilePopupOpen(false);
 		setIsAddPlacePopupOpen(false);
 		setIsEditAvatarPopupOpen(false);
+		setSelectedCard(null);
 	}
 
 	return (
@@ -34,6 +41,7 @@ function App() {
 				onEditProfile={handleEditProfileClick}
 				onAddPlace={handleAddPlaceClick}
 				onEditAvatar={handleEditAvatarClick}
+				onCardClick={handleCardClick}
 			/>
 			<Footer />
 
@@ -81,65 +89,7 @@ function App() {
 				</label>
 			</PopupWithForm>
 
-			{/* <template class="element-template">
-				<li class="elements__list-item">
-					<img src="#" alt=" " class="elements__img"/>
-					<div class="elements__descr">
-						<h3 class="elements__title"></h3>
-						<div class="elements__like-wrapper">
-							<button class="elements__btn-like" type="button" aria-label="Like"></button>
-							<span class="elements__like-count"></span>
-						</div>
-					</div>
-					<button class="elements__btn-delete" type="button" aria-label="Delete"></button>
-				</li>
-			</template> */}
-
-			{/* <div className="popup popup_type_profile">
-				<div class="popup__container">
-					<h2 class="popup__title">Редактировать профиль</h2>
-					<form action="#" class="form edit-form" name="edit" novalidate>
-						<label class="form__label">
-							<input class="form__input" id="name-input" type="text" name="name" placeholder="Имя" minlength="2" maxlength="40" required/>
-							<span class="form__input-error name-input-error"></span>
-						</label>
-						<label class="form__label">
-							<input class="form__input" id="about-input" type="text" name="about" placeholder="О себе" minlength="2" maxlength="200" required/>
-							<span class="form__input-error about-input-error"></span>
-						</label>
-						<button class="popup__btn-save" type="submit">Сохранить</button>
-					</form>
-					<button class="popup__btn-close" type="button" aria-label="Закрыть"></button>
-				</div>
-			</div> */}
-
-			{/* <div class="popup popup_type_card-add">
-				<div class="popup__container">
-					<h2 class="popup__title">Новое место</h2>
-					<form action="#" class="form add-form" name="add-form" novalidate>
-						<label class="form__label">
-							<input class="form__input" id="title-input" type="text" name="title" placeholder="Название" minlength="2" maxlength="30" required/>
-							<span class="form__input-error title-input-error"></span>
-						</label>
-						<label class="form__label">
-							<input class="form__input" id="link-input" type="url" name="link" placeholder="Ссылка на картинку" required/>
-							<span class="form__input-error link-input-error"></span>
-						</label>
-						<button class="popup__btn-save" type="submit">Создать</button>
-					</form>
-					<button class="popup__btn-close" type="button" aria-label="Закрыть"></button>
-				</div>
-			</div> */}
-
-			{/* <div class="popup popup-image popup_type_image">
-				<div class="popup-image__container">
-					<figure class="popup-image__figure">
-						<img src="#" alt="" class="popup-image__img"/>
-						<figcaption class="popup-image__caption"></figcaption>
-					</figure>
-					<button class="popup__btn-close" type="button" aria-label="Закрыть"></button>
-				</div>
-			</div> */}
+			<ImagePopup card={selectedCard} onClose={closeAllPopups} />
 
 			<div className="popup popup_type_delete-confirm">
 				<div className="popup__container">
@@ -147,23 +97,9 @@ function App() {
 					<form action="#" className="form delete-form" name="delete" noValidate>
 						<button className="popup__btn-save" type="submit">Да</button>
 					</form>
-					<button className="popup__btn-close" type="button" ariaLabel="Закрыть"></button>
+					<button className="popup__btn-close" type="button" aria-label="Закрыть"></button>
 				</div>
 			</div>
-
-			{/* <div class="popup popup_type_avatar">
-				<div class="popup__container">
-					<h2 class="popup__title">Обновить аватар</h2>
-					<form action="#" class="form avatar-form" name="avatar" novalidate>
-						<label class="form__label">
-							<input class="form__input" id="avatar-input" type="url" name="avatar" placeholder="Ссылка на картинку" required/>
-							<span class="form__input-error avatar-input-error"></span>
-						</label>
-						<button class="popup__btn-save" type="submit">Сохранить</button>
-					</form>
-					<button class="popup__btn-close" type="button" aria-label="Закрыть"></button>
-				</div>
-			</div> */}
 		</div>
 	);
 }

@@ -9,7 +9,7 @@ function PopupWithForm({ title, name, children, isOpen, onClose }) {
 					{children}
 					<button className="popup__btn-save" type="submit">Создать</button>
 				</form>
-				<button className="popup__btn-close" type="button" ariaLabel="Закрыть" onClick={onClose}></button>
+				<button className="popup__btn-close" type="button" aria-label="Закрыть" onClick={onClose}></button>
 			</div>
 		</div>
 	);
