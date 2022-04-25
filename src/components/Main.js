@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import api from "../utils/Api.js";
 import Card from "./Card.js";
 
 function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
 
-	const [userName, setUserName] = useState();
-	const [userDescription, setUserDescription] = useState();
-	const [userAvatar, setUserAvatar] = useState();
+	const [userName, setUserName] = useState('');
+	const [userDescription, setUserDescription] = useState('');
+	const [userAvatar, setUserAvatar] = useState('');
 	const [cards, setCards] = useState([]);
 
 	useEffect(() => {
@@ -17,9 +17,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
 			setUserAvatar(user.avatar);
 		})
 		.catch(err => console.log(err))
-	}, []);
 
-	useEffect(() => {
 		api.getInitialCards()
 		.then(card => {
 			setCards(card)})

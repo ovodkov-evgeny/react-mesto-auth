@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Footer from './Footer.js';
 import Header from './Header.js';
 import Main from './Main.js';
@@ -64,6 +64,7 @@ function App() {
 			<PopupWithForm
 				title='Новое место'
 				name='card-add'
+				buttonText='Создать'
 				isOpen={isAddPlacePopupOpen}
 				onClose={closeAllPopups}
 				>
