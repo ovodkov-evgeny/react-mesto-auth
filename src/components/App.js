@@ -18,7 +18,7 @@ function App() {
 	const [selectedCard, setSelectedCard] = useState(null);
 	const [currentUser, setCurrentUser] = useState({});
 	const [cards, setCards] = useState([]);
-	const [cardDelete, setCardDelete] = useState();
+	const [cardDelete, setCardDelete] = useState({});
 	
 	function handleEditAvatarClick() {
 		setIsEditAvatarPopupOpen(true);
@@ -47,7 +47,8 @@ function App() {
 		api.changeLikeCardStatus(card._id, !isLiked)
 		.then((newCard) => {
 			setCards((state) => state.map(c => c._id === card._id ? newCard : c));
-		});
+		})
+		.catch((err) => console.log(err));
 	}
 
 	function handleCardDelete() {
@@ -55,7 +56,8 @@ function App() {
 		.then(() => {
 			setCards((state) => state.filter((c) => c._id !== cardDelete._id));
 			closeAllPopups();
-		});
+		})
+		.catch((err) => console.log(err));
 	}
 
 	function handleUpdateUser(user) {
