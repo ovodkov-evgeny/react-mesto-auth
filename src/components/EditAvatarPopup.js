@@ -3,7 +3,7 @@ import PopupWithForm  from './PopupWithForm';
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
 
-	const link = useRef(null);
+	const link = useRef();
 	const [isLinkValid, setLinkValid] = useState(false);
 	const [linkValidationMessage, setLinkValidationMessage] = useState('');
 	const [buttonText, setButtonText] = useState('Сохранить');
