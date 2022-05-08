@@ -37,11 +37,9 @@ function App() {
 	}
 
 	function handleConfirmDelete(card) {
-		
-		// console.log(cardDelete);
+		console.log(card);
 		setIsConfirmPopupOpen(true);
 		setCardDelete(card);
-		console.log(setCardDelete(card));
 	}
 
 	function handleCardLike(card) {
@@ -56,7 +54,7 @@ function App() {
 	function handleCardDelete() {
 		api.deleteCard(cardDelete._id)
 		.then(() => {
-			setCards(cards.filter((c) => c._id !== cardDelete._id));
+			setCards((state) => state.filter((c) => c._id !== cardDelete._id));
 			closeAllPopups();
 		});
 	}
