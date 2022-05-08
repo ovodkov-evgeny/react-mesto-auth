@@ -12,27 +12,7 @@ function Main({
 	onCardDelete
 }) {
 
-	// const [userName, setUserName] = useState('');
-	// const [userDescription, setUserDescription] = useState('');
-	// const [userAvatar, setUserAvatar] = useState('');
-	// const [cards, setCards] = useState([]);
-
 	const currentUser = useContext(CurrentUserContext);
-
-	// useEffect(() => {
-	// 	api.getProfileInfo()
-	// 	.then(user => {
-	// 		setUserName(user.name);
-	// 		setUserDescription(user.about);
-	// 		setUserAvatar(user.avatar);
-	// 	})
-	// 	.catch(err => console.log(err))
-
-	// 	api.getInitialCards()
-	// 	.then(card => {
-	// 		setCards(card)})
-	// 	.catch(err => console.log(err))
-	// }, []);
 
 	return (
 		<main className="content">

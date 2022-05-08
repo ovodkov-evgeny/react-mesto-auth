@@ -63,38 +63,36 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
 			name='card-add'
 			isOpen={isOpen}
 			onClose={onClose}
+			onSubmit={handleSubmit}
 			>
-			<form className="form add-form" name="add-form" onSubmit={handleSubmit} noValidate>
-				<label className="form__label">
-					<input
-						className="form__input"
-						id="title-input"
-						type="text"
-						name="title"
-						placeholder="Название"
-						minLength="2"
-						maxLength="30"
-						value={name || ''}
-						onChange={handleChange}
-						required
-					/>
-					<span className={`form__input-error ${isNameValid ? '' : 'form__input-error_active'}`}>{nameValidationMessage}</span>
-				</label>
-				<label className="form__label">
-					<input
-						className="form__input"
-						id="link-input"
-						type="url"
-						name="link"
-						placeholder="Ссылка на картинку"
-						value={link || ''}
-						onChange={handleChange}
-						required/>
-					<span className={`form__input-error ${isLinkValid ? '' : 'form__input-error_active'}`}>{linkValidationMessage}</span>
-				</label>
-				<button className={`popup__btn-save ${isFormValid ? '' : 'popup__btn-save_disabled'}`} type="submit">{buttonText}</button>
-			</form>
-			
+			<label className="form__label">
+				<input
+					className="form__input"
+					id="title-input"
+					type="text"
+					name="title"
+					placeholder="Название"
+					minLength="2"
+					maxLength="30"
+					value={name || ''}
+					onChange={handleChange}
+					required
+				/>
+				<span className={`form__input-error ${isNameValid ? '' : 'form__input-error_active'}`}>{nameValidationMessage}</span>
+			</label>
+			<label className="form__label">
+				<input
+					className="form__input"
+					id="link-input"
+					type="url"
+					name="link"
+					placeholder="Ссылка на картинку"
+					value={link || ''}
+					onChange={handleChange}
+					required/>
+				<span className={`form__input-error ${isLinkValid ? '' : 'form__input-error_active'}`}>{linkValidationMessage}</span>
+			</label>
+			<button className={`popup__btn-save ${isFormValid ? '' : 'popup__btn-save_disabled'}`} type="submit">{buttonText}</button>	
 		</PopupWithForm>
 	);
 }

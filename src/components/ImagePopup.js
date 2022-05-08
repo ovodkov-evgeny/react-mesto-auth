@@ -1,8 +1,15 @@
 import React from 'react';
 
 function ImagePopup({ card, onClose }) {
+
+	function handleMouseDown(evt) {
+		if (evt.target === evt.currentTarget) {
+			onClose();
+		}
+	};
+
 	return (
-		<div className={`popup popup-image ${card && 'popup_opened'}`}>
+		<div className={`popup popup-image ${card && 'popup_opened'}`} onMouseDown={handleMouseDown}>
 			{card && (<div className="popup-image__container">
 				<figure className="popup-image__figure">
 					<img src={card.link} alt={card.name} className="popup-image__img"/>

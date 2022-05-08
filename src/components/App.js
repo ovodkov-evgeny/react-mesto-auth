@@ -18,7 +18,7 @@ function App() {
 	const [selectedCard, setSelectedCard] = useState(null);
 	const [currentUser, setCurrentUser] = useState({});
 	const [cards, setCards] = useState([]);
-	const [cardDelete, setCardDelete] = useState({});
+	const [cardDelete, setCardDelete] = useState();
 	
 	function handleEditAvatarClick() {
 		setIsEditAvatarPopupOpen(true);
@@ -37,7 +37,6 @@ function App() {
 	}
 
 	function handleConfirmDelete(card) {
-		console.log(card);
 		setIsConfirmPopupOpen(true);
 		setCardDelete(card);
 	}
@@ -58,15 +57,6 @@ function App() {
 			closeAllPopups();
 		});
 	}
-
-	// function handleCardDelete(card) {
-	// 	api.deleteCard(card._id)
-	// 		.then(() => {
-	// 			setCards(cards.filter(c => c._id !== card._id));
-	// 		})
-	// 		.then(setCardDelete({}))
-	// 		.then(() => closeAllPopups());
-	// }
 
 	function handleUpdateUser(user) {
 		api.setProfileInfo(user)
@@ -166,7 +156,6 @@ function App() {
 				/>
 
 				<ImagePopup card={selectedCard} onClose={closeAllPopups} />
-
 			</div>
 		</CurrentUserContext.Provider>
 	);

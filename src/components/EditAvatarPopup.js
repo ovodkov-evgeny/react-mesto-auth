@@ -35,22 +35,21 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
 			name='avatar'
 			isOpen={isOpen}
 			onClose={onClose}
+			onSubmit={handleSubmit}
 			>
-			<form className="form avatar-form" name="avatar" onSubmit={handleSubmit} noValidate>
-				<label className="form__label">
-					<input
-						className="form__input"
-						id="avatar-input"
-						type="url"
-						name="avatar"
-						placeholder="Ссылка на картинку"
-						ref={link}
-						onChange={() => checkAvatarValidtion(link.current)}
-						required/>
-					<span className={`form__input-error ${isLinkValid ? '' : 'form__input-error_active'}`}>{linkValidationMessage}</span>
-				</label>
-				<button className={`popup__btn-save ${isLinkValid ? '' : 'popup__btn-save_disabled'}`} type="submit">{buttonText}</button>
-			</form>
+			<label className="form__label">
+				<input
+					className="form__input"
+					id="avatar-input"
+					type="url"
+					name="avatar"
+					placeholder="Ссылка на картинку"
+					ref={link}
+					onChange={() => checkAvatarValidtion(link.current)}
+					required/>
+				<span className={`form__input-error ${isLinkValid ? '' : 'form__input-error_active'}`}>{linkValidationMessage}</span>
+			</label>
+			<button className={`popup__btn-save ${isLinkValid ? '' : 'popup__btn-save_disabled'}`} type="submit">{buttonText}</button>
 		</PopupWithForm>
 	)
 };

@@ -64,38 +64,37 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
 			name='profile'
 			isOpen={isOpen}
 			onClose={onClose}
+			onSubmit={handleSubmit}
 			>
-			<form className="form edit-form" name="profile" onSubmit={handleSubmit} noValidate>
-				<label className="form__label">
-					<input
-						className="form__input"
-						id="name-input"
-						type="text"
-						name="name"
-						placeholder="Имя"
-						minLength="2"
-						maxLength="40"
-						value={name || ''}
-						onChange={handleChange}
-						required/>
-					<span className={`form__input-error ${isNameValid ? '' : 'form__input-error_active'}`}>{nameValidationMessage}</span>
-				</label>
-				<label className="form__label">
-					<input
-						className="form__input"
-						id="about-input"
-						type="text"
-						name="about"
-						placeholder="О себе"
-						minLength="2"
-						maxLength="200"
-						value={description || ''}
-						onChange={handleChange}
-						required/>
-					<span className={`form__input-error ${isDescriptionValid ? '' : 'form__input-error_active'}`}>{descriptionValidationMessage}</span>
-				</label>
-				<button className={`popup__btn-save ${isFormValid ? '' : 'popup__btn-save_disabled'}`} type="submit">{buttonText}</button>
-			</form>
+			<label className="form__label">
+				<input
+					className="form__input"
+					id="name-input"
+					type="text"
+					name="name"
+					placeholder="Имя"
+					minLength="2"
+					maxLength="40"
+					value={name || ''}
+					onChange={handleChange}
+					required/>
+				<span className={`form__input-error ${isNameValid ? '' : 'form__input-error_active'}`}>{nameValidationMessage}</span>
+			</label>
+			<label className="form__label">
+				<input
+					className="form__input"
+					id="about-input"
+					type="text"
+					name="about"
+					placeholder="О себе"
+					minLength="2"
+					maxLength="200"
+					value={description || ''}
+					onChange={handleChange}
+					required/>
+				<span className={`form__input-error ${isDescriptionValid ? '' : 'form__input-error_active'}`}>{descriptionValidationMessage}</span>
+			</label>
+			<button className={`popup__btn-save ${isFormValid ? '' : 'popup__btn-save_disabled'}`} type="submit">{buttonText}</button>
 		</PopupWithForm>
 	);
 };

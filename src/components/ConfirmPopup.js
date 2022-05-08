@@ -20,9 +20,7 @@ function ConfirmPopup({ isOpen, onClose, onCardDelete }) {
 			onClose={onClose}
 			onSubmit={handleSubmit}
 		>
-			<form className="form delete-form" name="delete" noValidate>
-				<button className="popup__btn-save" type="submit">{buttonText}</button>
-			</form>
+			<button className="popup__btn-save" type="submit">{buttonText}</button>
 		</PopupWithForm>
 	);
 }
