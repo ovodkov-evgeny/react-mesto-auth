@@ -5,57 +5,65 @@ import PopupWithForm from "./PopupWithForm";
 function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
 
 	const currentUser = useContext(CurrentUserContext);
-	const [name, setName] = useState('');
-	const [description, setDescription] = useState('');
-	const [isNameValid, setNameValid] = useState(true);
-	const [isDescriptionValid, setDescriptionValid] = useState(true);
-	const [nameValidationMessage, setNameValidationMessage] = useState('');
-	const [descriptionValidationMessage, setDescriptionValidationMessage] = useState('');
+
 	const [isFormValid, setFormValid] = useState(false);
 	const [buttonText, setButtonText] = useState('Сохранить');
+	
+	const [values, setValues] = useState({
+		name: {
+			value: '',
+			message: '',
+			isValid: false,
+		},
+		about: {
+			value: '',
+			message: '',
+			isValid: false,
+		},
+	});
 
 	useEffect(() => {
-		setName(currentUser.name);
-		setDescription(currentUser.about);
-		setNameValid(true);
-		setDescriptionValid(true);
-		setFormValid(true);
-		setNameValidationMessage('');
-		setDescriptionValidationMessage('');
+		setValues(values => ({
+			...values,
+			name: {
+				value: currentUser.name,
+				isValid: true,
+			},
+			about: {
+				value: currentUser.about,
+				isValid: true,
+			},
+		}));
 		setButtonText('Сохранить');
 	}, [currentUser, isOpen]);
 
 	useEffect(() => {
-		if (isNameValid && isDescriptionValid) {
-			setFormValid(true);
-		} else {
-			setFormValid(false);
-		}
-	}, [isNameValid, isDescriptionValid]);
+		setFormValid(values.name.isValid && values.about.isValid);
+	}, [values]);
 
-	function handleChange(evt) {
-		switch (evt.target.name) {
-			case 'name':
-				setName(evt.target.value);
-				setNameValidationMessage(evt.target.validationMessage);
-				setNameValid(evt.target.validity.valid);
-			break;
-			case 'about':
-				setDescription(evt.target.value);
-				setDescriptionValidationMessage(evt.target.validationMessage);
-				setDescriptionValid(evt.target.validity.valid);
-			break;
-		}
-	}
+	const handleChange = (event) => {
+		const { name, value, validationMessage, validity } = event.target;
+		setValues((values) => ({
+			...values,
+			[name]: {
+				value,
+				message: validationMessage,
+				isValid: validity.valid,
+			},
+		}));
+	};
+
 
 	function handleSubmit(evt) {
 		evt.preventDefault();
 
 		setButtonText('Сохранение...');
-		onUpdateUser({
-			name,
-			about: description,
-		});
+		const data = {
+			name: values.name.value,
+			about: values.about.value,
+		};
+
+		onUpdateUser(data);
 	}
 
 	return (
@@ -75,10 +83,10 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
 					placeholder="Имя"
 					minLength="2"
 					maxLength="40"
-					value={name || ''}
+					value={values.name.value || ''}
 					onChange={handleChange}
 					required/>
-				<span className={`form__input-error ${isNameValid ? '' : 'form__input-error_active'}`}>{nameValidationMessage}</span>
+				<span className={`form__input-error ${values.name.isValid ? '' : 'form__input-error_active'}`}>{values.name.message}</span>
 			</label>
 			<label className="form__label">
 				<input
@@ -89,10 +97,10 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
 					placeholder="О себе"
 					minLength="2"
 					maxLength="200"
-					value={description || ''}
+					value={values.about.value || ''}
 					onChange={handleChange}
 					required/>
-				<span className={`form__input-error ${isDescriptionValid ? '' : 'form__input-error_active'}`}>{descriptionValidationMessage}</span>
+				<span className={`form__input-error ${values.about.isValid ? '' : 'form__input-error_active'}`}>{values.about.message}</span>
 			</label>
 			<button className={`popup__btn-save ${isFormValid ? '' : 'popup__btn-save_disabled'}`} type="submit">{buttonText}</button>
 		</PopupWithForm>

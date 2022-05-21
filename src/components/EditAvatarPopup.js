@@ -4,30 +4,40 @@ import PopupWithForm  from './PopupWithForm';
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
 
 	const link = useRef();
-	const [isLinkValid, setLinkValid] = useState(false);
-	const [linkValidationMessage, setLinkValidationMessage] = useState('');
+	
 	const [buttonText, setButtonText] = useState('Сохранить');
 
-	function checkAvatarValidtion(link) {
-		setLinkValid(link.validity.valid);
-		setLinkValidationMessage(link.validationMessage);
-	}
+	const [values, setValues] = useState({
+		message: '',
+		isValid: false,
+	});
 
 	useEffect(() => {
 		link.current.value = '';
-		setLinkValid(false);
-		setLinkValidationMessage('');
+		setValues((values) => ({
+			...values,
+			message: ''
+		}))
+		
 		setButtonText('Сохранить');
 	}, [isOpen]);
 
+	const checkAvatarValidtion = (link) => {
+		setValues((values) => ({
+			...values,
+			message: link.validationMessage,
+			isValid: link.validity.valid
+		}));
+	}
+
 	function handleSubmit(evt) {
 		evt.preventDefault();
+		
 		setButtonText('Сохранение...');
 		onUpdateAvatar({
 			avatar: link.current.value,
 		});
-		link.current.value = '';
-	};
+	}
 	
 	return (
 		<PopupWithForm
@@ -47,9 +57,9 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
 					ref={link}
 					onChange={() => checkAvatarValidtion(link.current)}
 					required/>
-				<span className={`form__input-error ${isLinkValid ? '' : 'form__input-error_active'}`}>{linkValidationMessage}</span>
+				<span className={`form__input-error ${values.isValid ? '' : 'form__input-error_active'}`}>{values.message}</span>
 			</label>
-			<button className={`popup__btn-save ${isLinkValid ? '' : 'popup__btn-save_disabled'}`} type="submit">{buttonText}</button>
+			<button className={`popup__btn-save ${values.isValid ? '' : 'popup__btn-save_disabled'}`} type="submit">{buttonText}</button>
 		</PopupWithForm>
 	)
 };
