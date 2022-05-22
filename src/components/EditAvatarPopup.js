@@ -59,7 +59,13 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
 					required/>
 				<span className={`form__input-error ${values.isValid ? '' : 'form__input-error_active'}`}>{values.message}</span>
 			</label>
-			<button className={`popup__btn-save ${values.isValid ? '' : 'popup__btn-save_disabled'}`} type="submit">{buttonText}</button>
+			<button 
+				className={`btn popup__btn-save ${values.isValid ? '' : 'popup__btn-save_disabled'}`}
+				type="submit"
+				disabled={!values.isValid}
+				>
+					{buttonText}
+			</button>
 		</PopupWithForm>
 	)
 };

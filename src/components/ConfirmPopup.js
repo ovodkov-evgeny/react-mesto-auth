@@ -1,12 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PopupWithForm from './PopupWithForm';
 
 function ConfirmPopup({ isOpen, onClose, onCardDelete }) {
 
-	const [buttonText, setButtonText] = useState('Да');
+	const [buttonText, setButtonText] = useState('');
+
+	useEffect(() => {
+		setButtonText('Да');
+	}, [isOpen]);
 
 	function handleSubmit(evt) {
 		evt.preventDefault();
+		
 		setButtonText('Удаление...');
 
 		onCardDelete();
@@ -20,7 +25,7 @@ function ConfirmPopup({ isOpen, onClose, onCardDelete }) {
 			onClose={onClose}
 			onSubmit={handleSubmit}
 		>
-			<button className="popup__btn-save" type="submit">{buttonText}</button>
+			<button className="btn popup__btn-save" type="submit">{buttonText}</button>
 		</PopupWithForm>
 	);
 }

@@ -80,9 +80,35 @@ class Api {
 		})
 		.then(this._getDataResponse);
 	}
+
+// 	register(password, email) {
+// 		return fetch(`${this._baseUrl}/signup`, {
+// 			method: 'POST',
+// 			headers: this._headers,
+// 			body: JSON.stringify(password, email)
+// 		})
+// 		.then(this._getDataResponse);
+// 	}
+	
+// 	login(password, email) {
+// 		return fetch(`${this._baseUrl}/signin`, {
+// 			method: 'POST',
+// 			headers: this._headers,
+// 			body: JSON.stringify(password, email)
+// 		})
+// 		.then(this._getDataResponse);
+// 	}
+
+// 	logout() {
+// 		return fetch(`${this._baseUrl}/signout`, {
+// 			method: 'POST',
+// 			headers: this._headers
+// 		})
+// 		.then(this._getDataResponse);
+// 	}
 }
 
-const api = new Api({
+ export const api = new Api({
 	baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-39',
 	headers: {
 		authorization: 'b8106e98-09b1-41ac-a24c-7544ee76e986',
@@ -90,4 +116,9 @@ const api = new Api({
 	}
 });
 
-export default api;
+// export const auth = new Api({
+// 	baseUrl: 'https://auth.nomoreparties.co',
+// 	headers: {
+// 		'Content-Type': 'application/json'
+// 	}
+// });

@@ -102,7 +102,13 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
 					required/>
 				<span className={`form__input-error ${values.about.isValid ? '' : 'form__input-error_active'}`}>{values.about.message}</span>
 			</label>
-			<button className={`popup__btn-save ${isFormValid ? '' : 'popup__btn-save_disabled'}`} type="submit">{buttonText}</button>
+			<button
+				className={`btn popup__btn-save ${isFormValid ? '' : 'popup__btn-save_disabled'}`}
+				type="submit"
+				disabled={!isFormValid}
+				>
+					{buttonText}
+			</button>
 		</PopupWithForm>
 	);
 };
