@@ -9,7 +9,7 @@ _Функционал:_ Добавление/удаление карточек, 
 
 ### Как скачать проект?
 
-1. ``` git clone https://github.com/ovodkov-evgeny/mesto-react.git``` - скачать проект с GitHub
+1. ``` git clone https://github.com/ovodkov-evgeny/react-mesto-auth.git``` - скачать проект с GitHub
 
 2. ```npm install``` - установить все необходимые пакеты и зависимости
 
@@ -24,4 +24,4 @@ _Функционал:_ Добавление/удаление карточек, 
 
 ✅ Сделать "Живую" валидацию форм
 
-* Сделать backend часть
+✅ Сделать backend часть

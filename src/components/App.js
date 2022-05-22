@@ -13,6 +13,7 @@ import EditAvatarPopup from './EditAvatarPopup.js';
 import AddPlacePopup from './AddPlacePopup.js';
 import ImagePopup from './ImagePopup.js';
 import ConfirmPopup from './ConfirmPopup.js';
+import InfoTooltip from './InfoTooltip.js';
 
 import { api } from '../utils/Api.js';
 import * as auth from '../utils/auth.js';
@@ -23,7 +24,7 @@ function App() {
 	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
 	const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 	const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
-	const [isRegistrationPageOpen, setIsRegistrationPageOpen] = useState(false);
+	const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
 
 	const [selectedCard, setSelectedCard] = useState(null);
 	const [cards, setCards] = useState([]);
@@ -32,7 +33,7 @@ function App() {
 	const [currentUser, setCurrentUser] = useState({});
 	const [userEmail, setUserEmail] = useState('');
 	const [loggedIn, setLoggedIn] = useState(false);
-	// const [successRegistration, setSuccessRegistration] = useState(false);
+	const [successRegistration, setSuccessRegistration] = useState(false);
 
 	const navigation = useNavigate();
 	
@@ -116,185 +117,37 @@ function App() {
 		setIsEditAvatarPopupOpen(false);
 		setIsConfirmPopupOpen(false);
 		setSelectedCard(null);
-		setIsRegistrationPageOpen(false);
+		setIsRegistrationPopupOpen(false);
 	}
 
-	// function onRegister(data) {
-	// 	// console.log(data);
-	// 	auth.register(data)
-	// 		.then((res) => {
-	// 			if (res) {
-	// 				setSuccessRegistration(true);
-	// 				setIsRegistrationPageOpen(true);
-	// 				navigation('/sign-in');
-	// 			} else {
-	// 				setSuccessRegistration(false);
-	// 				setIsRegistrationPageOpen(true);
-	// 			}
-	// 		})
-	// 		.catch((err) => console.log(err));
-	// }
-
-	// function onLogin(data) {
-	// 	console.log(data);
-	// 	auth.login(data)
-	// 		.then((res) => {
-	// 			if (res) {
-	// 				setUserEmail(res.email);
-	// 				setLoggedIn(true);
-	// 				localStorage.setItem('loggedIn', 'true');
-	// 				api.getProfileInfo()
-	// 					.then((res) => {
-	// 						console.log(res);
-	// 						setCurrentUser(res)})
-	// 					.catch((err) => console.log(err));
-	// 				navigation('/');
-	// 			} else {
-	// 				setIsRegistrationPageOpen(true);
-	// 			}
-	// 		})
-	// 		.catch((err) => console.log(err));
-	// }
-
-	// function handleRegister(password, email) {
-	// 	return register(password, email)
-	// 	 .then(() => {
-	// 		 navigation('/sign-in')
-	// 	 })
-	// 	 .catch(err => console.log(err));
-	// }
- 
-	// function handleLogin(password, email) {
-	// 	return login(password, email)
-	// 	.then(data => {
-	// 	 if(data.jwt) {
-	// 		 localStorage.setItem('jwt', data.jwt);
-	// 	 }
-	//  })
-	// }
- 
-
-	// function onSignOut() {
-	// 	auth.logout()
-	// 		.then(() => {
-	// 			localStorage.setItem('loggedIn', 'false');
-	// 			setLoggedIn(false);
-	// 			setUserEmail('');
-	// 		})
-	// 		.catch((err) => console.log(err))
-	// }
-
-	// useEffect(() => {
-	// 	if (localStorage.getItem('loggedIn') === 'true') {
-	// 		api.getProfileInfo()
-	// 			.then((res) => {
-	// 				if (res) {
-	// 					setLoggedIn(true);
-	// 					navigation('/');
-	// 					setUserEmail(res.email);
-	// 				}
-	// 			})
-	// 			.catch((err) => console.log(err));
-	// 	}
-	// 	const handleEscClose = (evt) => {
-	// 		if (evt.key === 'Escape') {
-	// 			evt.preventDefault();
-	// 			closeAllPopups();
-	// 		}
-	// 	};
-
-	// 	document.addEventListener('keydown', handleEscClose);
-	// 	return () => document.removeEventListener('keydown', handleEscClose);
-	// }, []);
-
-	// useEffect(() => {
-	// 	if (loggedIn) {
-	// 		Promise.all([api.getInitialCards(), api.getProfileInfo()])
-	// 			.then(([cards, user]) => {
-	// 				setCards(cards);
-	// 				setCurrentUser(user);
-	// 			})
-	// 			.catch((err) => console.log(err));
-	// 	}
-	// }, [loggedIn]);
-
-	// 	useEffect(() => {
-	// 		if (localStorage.getItem('loggedIn') === 'true') {
-	// 			api
-	// 				.getUser()
-	// 				.then((res) => {
-	// 					if (res) {
-	// 						setLoggedIn(true);
-	// 						navigate('/');
-	// 						setUserEmail(res.email);
-	// 					}
-	// 				})
-	// 				.catch((err) => console.log(err))
-	// 		}
-	// 	});
-
-	// useEffect(() => {
-	// 	api.getProfileInfo()
-	// 	.then(user => setCurrentUser(user))
-	// 	.catch(err => console.log(err));
-
-	// 	api.getInitialCards()
-	// 	.then(card => {
-	// 		setCards(card)})
-	// 	.catch(err => console.log(err));
-	// }, []);
-
-	useEffect(() => {
-		document.addEventListener('keydown', handleEscClose);
-		return () => document.removeEventListener('keydown', handleEscClose);
-	}, []);
-
-	useEffect(() => {
-		handleTokenCheck();
-		if (loggedIn) {
-			Promise.all([api.getProfileInfo(), api.getInitialCards()])
-				.then(([userData, cardData]) => {
-					setCurrentUser(userData);
-					setCards(cardData);
-				})
-				.catch((err) => console.log(`Ошибка ${err}`))
-				.finally(() => { });
-		}
-	}, [loggedIn]);
-
-	function onRegister(email, password) {
-		auth.register(email, password)
+	function onRegister(data) {
+		auth.register(data)
 			.then((res) => {
 				if (res) {
-					// setInfoPopupOpen(true);
-					// setIsReg(true);
+					setSuccessRegistration(true);
+					setIsRegistrationPopupOpen(true);
 					navigation('/sign-in');
 				} else {
-					// setInfoPopupOpen(true);
-					// setIsReg(false);
-					console.log('else')
+					setSuccessRegistration(false);
+					setIsRegistrationPopupOpen(true);
 				}
 			})
-			.catch((err) => {
-				// setInfoPopupOpen(true);
-				console.log(`Ошибка входа ${err}`)
-				// setIsReg(false);
-			})
+			.catch((err) => console.log(err));
 	}
 
-	function onLogin(email, password) {
-		auth.login(email, password)
+	function onLogin(data) {
+		auth.login(data)
 			.then((data) => {
-				localStorage.setItem("jwt", data.token);
-				setUserEmail(email);
-				setLoggedIn(true);
-				navigation('/');
+				if (data) {
+					localStorage.setItem("jwt", data.token);
+					setUserEmail(data.email);
+					setLoggedIn(true);
+					navigation('/');
+				} else {
+					setIsRegistrationPopupOpen(true);
+				}
 			})
-			.catch((err) => {
-				// setInfoPopupOpen(true);
-				console.log(`Ошибка входа ${err}`)
-				// setIsReg(false);
-			})
+			.catch((err) => console.log(err))
 			.finally(() => { });
 
 	}
@@ -317,6 +170,24 @@ function App() {
 				})
 		}
 	}
+
+	useEffect(() => {
+		document.addEventListener('keydown', handleEscClose);
+		return () => document.removeEventListener('keydown', handleEscClose);
+	}, []);
+
+	useEffect(() => {
+		handleTokenCheck();
+		if (loggedIn) {
+			Promise.all([api.getProfileInfo(), api.getInitialCards()])
+				.then(([userData, cardData]) => {
+					setCurrentUser(userData);
+					setCards(cardData);
+				})
+				.catch((err) => console.log(`Ошибка ${err}`))
+				.finally(() => { });
+		}
+	}, [loggedIn]);
 
 	return (
 		<CurrentUserContext.Provider value={currentUser}>
@@ -344,9 +215,9 @@ function App() {
 						element={
 							<Register
 								register={onRegister}
-								// isPopupOpen={isRegistrationPageOpen}
-								// openPopup={setIsRegistrationPageOpen}
-								// closePopup={closeAllPopups}
+								isPopupOpen={isRegistrationPopupOpen}
+								openPopup={setIsRegistrationPopupOpen}
+								closePopup={closeAllPopups}
 							/>
 						}
 					/>
@@ -355,9 +226,9 @@ function App() {
 						element={
 							<Login
 								login={onLogin}
-								// isPopupOpen={isRegistrationPageOpen}
-								// openPopup={setIsRegistrationPageOpen}
-								// closePopup={closeAllPopups}
+								isPopupOpen={isRegistrationPopupOpen}
+								openPopup={setIsRegistrationPopupOpen}
+								closePopup={closeAllPopups}
 							/>
 						}
 					/>
@@ -389,6 +260,12 @@ function App() {
 				/>
 
 				<ImagePopup card={selectedCard} onClose={closeAllPopups} />
+
+				<InfoTooltip
+					isOpen={isRegistrationPopupOpen}
+					onClose={closeAllPopups}
+					success={successRegistration}
+				/>
 			</div>
 		</CurrentUserContext.Provider>
 	);

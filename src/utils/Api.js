@@ -80,32 +80,6 @@ class Api {
 		})
 		.then(this._getDataResponse);
 	}
-
-// 	register(password, email) {
-// 		return fetch(`${this._baseUrl}/signup`, {
-// 			method: 'POST',
-// 			headers: this._headers,
-// 			body: JSON.stringify(password, email)
-// 		})
-// 		.then(this._getDataResponse);
-// 	}
-	
-// 	login(password, email) {
-// 		return fetch(`${this._baseUrl}/signin`, {
-// 			method: 'POST',
-// 			headers: this._headers,
-// 			body: JSON.stringify(password, email)
-// 		})
-// 		.then(this._getDataResponse);
-// 	}
-
-// 	logout() {
-// 		return fetch(`${this._baseUrl}/signout`, {
-// 			method: 'POST',
-// 			headers: this._headers
-// 		})
-// 		.then(this._getDataResponse);
-// 	}
 }
 
  export const api = new Api({
@@ -115,10 +89,3 @@ class Api {
 		'Content-Type': 'application/json'
 	}
 });
-
-// export const auth = new Api({
-// 	baseUrl: 'https://auth.nomoreparties.co',
-// 	headers: {
-// 		'Content-Type': 'application/json'
-// 	}
-// });
