@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import PopupWithForm from './PopupWithForm';
 
 function ConfirmPopup({ isOpen, onClose, onCardDelete }) {
 
-	const [buttonText, setButtonText] = useState('');
+	const [buttonText, setButtonText] = useState(' ');
 
 	useEffect(() => {
 		setButtonText('Да');
@@ -18,15 +17,26 @@ function ConfirmPopup({ isOpen, onClose, onCardDelete }) {
 	}
 
 	return (
-		<PopupWithForm
-			name='delete-confirm'
-			title='Вы уверены?'
-			isOpen={isOpen}
-			onClose={onClose}
-			onSubmit={handleSubmit}
+		<div
+			className={`popup confirm-popup
+			${isOpen && 'popup_opened'}`}
 		>
-			<button className="btn popup__btn-save" type="submit">{buttonText}</button>
-		</PopupWithForm>
+			<div className="popup__container">
+				<button
+					className="popup__btn-close"
+					type="button"
+					onClick={onClose}
+				/>
+				<h2 className="popup__title">Вы уверены?</h2>
+				<button
+					className="btn popup__btn-save"
+					type="button"
+					onClick={handleSubmit}
+				>
+					{buttonText}
+				</button>
+			</div>
+		</div>
 	);
 }
 

@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
+function AddPlacePopup({ isOpen, onClose, onAddPlace, loading }) {
 
 	const [isFormValid, setFormValid] = useState(false);
-	const [buttonText, setButtonText] = useState('Создать');
 
 	const [values, setValues] = useState({
 		title: {
@@ -32,8 +31,6 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
 				isValid: false,
 			},
 		});
-		
-		setButtonText('Создать');
 	}, [isOpen]);
 
 	useEffect(() => {
@@ -55,8 +52,6 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
 	function handleSubmit(evt) {
 		evt.preventDefault();
 
-		setButtonText('Создание...');
-
 		const data = {
 			name: values.title.value,
 			link: values.link.value,
@@ -72,7 +67,9 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
 			isOpen={isOpen}
 			onClose={onClose}
 			onSubmit={handleSubmit}
-			>
+			isFormValid={isFormValid}
+			buttonText={loading ? 'Создание...' : 'Создать'}
+		>
 			<label className="form__label">
 				<input
 					className="form__input"
@@ -100,13 +97,6 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
 					required/>
 				<span className={`form__input-error ${values.link.isValid ? '' : 'form__input-error_active'}`}>{values.link.message}</span>
 			</label>
-			<button 
-				className={`btn popup__btn-save ${isFormValid ? '' : 'popup__btn-save_disabled'}`}
-				type="submit"
-				disabled={!isFormValid}
-				>
-					{buttonText}
-			</button>	
 		</PopupWithForm>
 	);
 }

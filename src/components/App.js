@@ -29,6 +29,7 @@ function App() {
 	const [selectedCard, setSelectedCard] = useState(null);
 	const [cards, setCards] = useState([]);
 	const [cardDelete, setCardDelete] = useState({});
+	const [loading, setLoading] = useState(false);
 
 	const [currentUser, setCurrentUser] = useState({});
 	const [userEmail, setUserEmail] = useState('');
@@ -78,30 +79,36 @@ function App() {
 	}
 
 	function handleUpdateUser(user) {
+		setLoading(true);
 		api.setProfileInfo(user)
 			.then(user => {
 				setCurrentUser(user);
 				closeAllPopups();
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => console.log(err))
+			.finally(() => setLoading(false));
 	}
 
 	function handleUpdateAvatar({avatar}) {
+		setLoading(true);
 		api.editAvatar(avatar)
 			.then(user => {
 				setCurrentUser(user);
 				closeAllPopups();
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => console.log(err))
+			.finally(() => setLoading(false));
 	}
 
 	function handleAddPlace(card) {
+		setLoading(true);
 		api.addNewCard(card)
 			.then(newCard => {
 				setCards([newCard, ...cards]);
 				closeAllPopups();
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => console.log(err))
+			.finally(() => setLoading(false));
 	}
 
 	function handleEscClose(evt) {
@@ -132,7 +139,12 @@ function App() {
 					setIsRegistrationPopupOpen(true);
 				}
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => {
+				setIsRegistrationPopupOpen(true);
+				console.log(`Ошибка входа ${err}`);
+				setSuccessRegistration(false);
+			})
+			.finally(() => { });
 	}
 
 	function onLogin(data) {
@@ -147,7 +159,10 @@ function App() {
 					setIsRegistrationPopupOpen(true);
 				}
 			})
-			.catch((err) => console.log(err))
+			.catch((err) => {
+				setIsRegistrationPopupOpen(true);
+				console.log(`Ошибка входа ${err}`);
+			})
 			.finally(() => { });
 
 	}
@@ -168,6 +183,7 @@ function App() {
 					navigation('/');
 					setUserEmail(res.data.email);
 				})
+				.catch((err) => console.log(err));
 		}
 	}
 
@@ -239,18 +255,21 @@ function App() {
 					isOpen={isEditProfilePopupOpen}
 					onClose={closeAllPopups}
 					onUpdateUser={handleUpdateUser}
+					loading={loading}
 				/>
 
 				<EditAvatarPopup
 					isOpen={isEditAvatarPopupOpen}
 					onClose={closeAllPopups}
 					onUpdateAvatar={handleUpdateAvatar}
+					loading={loading}
 				/>
 
 				<AddPlacePopup
 					isOpen={isAddPlacePopupOpen}
 					onClose={closeAllPopups}
 					onAddPlace={handleAddPlace}
+					loading={loading}
 				/>
 
 				<ConfirmPopup

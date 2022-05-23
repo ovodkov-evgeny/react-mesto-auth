@@ -1,11 +1,9 @@
 import { useRef, useState, useEffect } from 'react';
 import PopupWithForm  from './PopupWithForm';
 
-function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
+function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, loading }) {
 
 	const link = useRef();
-	
-	const [buttonText, setButtonText] = useState('Сохранить');
 
 	const [values, setValues] = useState({
 		message: '',
@@ -13,16 +11,15 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
 	});
 
 	useEffect(() => {
+		checkAvatarValidation(link.current);
 		link.current.value = '';
 		setValues((values) => ({
 			...values,
 			message: ''
 		}))
-		
-		setButtonText('Сохранить');
 	}, [isOpen]);
 
-	const checkAvatarValidtion = (link) => {
+	const checkAvatarValidation = (link) => {
 		setValues((values) => ({
 			...values,
 			message: link.validationMessage,
@@ -32,8 +29,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
 
 	function handleSubmit(evt) {
 		evt.preventDefault();
-		
-		setButtonText('Сохранение...');
+
 		onUpdateAvatar({
 			avatar: link.current.value,
 		});
@@ -46,6 +42,8 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
 			isOpen={isOpen}
 			onClose={onClose}
 			onSubmit={handleSubmit}
+			isFormValid={values.isValid}
+			buttonText={loading ? 'Сохранение...' : 'Сохранить'}
 			>
 			<label className="form__label">
 				<input
@@ -55,17 +53,10 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
 					name="avatar"
 					placeholder="Ссылка на картинку"
 					ref={link}
-					onChange={() => checkAvatarValidtion(link.current)}
+					onChange={() => checkAvatarValidation(link.current)}
 					required/>
 				<span className={`form__input-error ${values.isValid ? '' : 'form__input-error_active'}`}>{values.message}</span>
 			</label>
-			<button 
-				className={`btn popup__btn-save ${values.isValid ? '' : 'popup__btn-save_disabled'}`}
-				type="submit"
-				disabled={!values.isValid}
-				>
-					{buttonText}
-			</button>
 		</PopupWithForm>
 	)
 };

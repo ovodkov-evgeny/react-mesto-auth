@@ -2,12 +2,11 @@ import { useState, useEffect, useContext } from "react";
 import { CurrentUserContext } from "../context/CurrentUserContext";
 import PopupWithForm from "./PopupWithForm";
 
-function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, loading }) {
 
 	const currentUser = useContext(CurrentUserContext);
 
 	const [isFormValid, setFormValid] = useState(false);
-	const [buttonText, setButtonText] = useState('Сохранить');
 	
 	const [values, setValues] = useState({
 		name: {
@@ -34,7 +33,6 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
 				isValid: true,
 			},
 		}));
-		setButtonText('Сохранить');
 	}, [currentUser, isOpen]);
 
 	useEffect(() => {
@@ -56,8 +54,6 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
 
 	function handleSubmit(evt) {
 		evt.preventDefault();
-
-		setButtonText('Сохранение...');
 		const data = {
 			name: values.name.value,
 			about: values.about.value,
@@ -73,6 +69,8 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
 			isOpen={isOpen}
 			onClose={onClose}
 			onSubmit={handleSubmit}
+			isFormValid={isFormValid}
+			buttonText={loading ? 'Сохранение...' : 'Сохранить'}
 			>
 			<label className="form__label">
 				<input
@@ -102,13 +100,6 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
 					required/>
 				<span className={`form__input-error ${values.about.isValid ? '' : 'form__input-error_active'}`}>{values.about.message}</span>
 			</label>
-			<button
-				className={`btn popup__btn-save ${isFormValid ? '' : 'popup__btn-save_disabled'}`}
-				type="submit"
-				disabled={!isFormValid}
-				>
-					{buttonText}
-			</button>
 		</PopupWithForm>
 	);
 };

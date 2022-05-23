@@ -29,11 +29,6 @@ export default function AuthForm({ name, buttonText, onSubmit, children }) {
 	}
 
 	useEffect(() => {
-		// if (values.email.isValid && values.password.isValid) {
-		//   setFormValid(true);
-		// } else {
-		//   setFormValid(false);
-		// }
 		setFormValid(values.email.isValid && values.password.isValid);
 	}, [values]);
 

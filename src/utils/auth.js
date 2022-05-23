@@ -13,25 +13,17 @@ export const register = (password, email) => {
 		body: JSON.stringify(password, email)
 	})
 	.then((res) => _getDataResponse(res))
-	.catch((err) => console.log(err));
 };
 
 export const login = (password, email) => {
 	return fetch(`${BASE_URL}/signin`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(password, email)
-		})
-		.then((res) => _getDataResponse(res))
-		.then((data) => {
-			if (data.token) {
-				localStorage.setItem('jwt', data.token);
-				return data;
-			}
-		})
-		.catch(err => console.log(err))
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(password, email)
+	})
+	.then((res) => _getDataResponse(res))
 };
 
 export const checkToken = (token) => {
@@ -42,6 +34,5 @@ export const checkToken = (token) => {
 				'Authorization': `Bearer ${token}`,
 			}
 		})
-		.then(res => res.json())
-		.then(data => data)
+		.then((res) => _getDataResponse(res))
 }
